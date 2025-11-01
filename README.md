@@ -168,3 +168,78 @@ counter(); // 2
 > “A closure is when a function retains access to variables from its parent scope, even after that parent function has completed execution.”
 
 
+---
+
+
+ # 5. What is event loop?
+
+### **Event Loop (Simple Explanation)**
+
+The **Event Loop** is the part of JavaScript’s runtime that manages **how code is executed**, especially when dealing with **asynchronous tasks** like `setTimeout`, `fetch`, or `Promises`.
+
+JavaScript is **single-threaded**, meaning it can execute **one thing at a time**.
+So how does it handle things like timers, network requests, or user events *without freezing*?
+
+That’s where the **event loop** comes in.
+
+
+
+### **How it works (Step-by-step)**
+
+1. **Call Stack**
+
+   * When you run JavaScript, functions get pushed onto the **call stack** and are executed one by one (top to bottom).
+
+2. **Web APIs / Node APIs**
+
+   * When an async function (like `setTimeout` or `fetch`) is called, it’s handled by the **browser (Web APIs)** or **Node.js APIs**, not directly by the JS engine.
+   * These APIs run in the background.
+
+3. **Callback Queue / Task Queue**
+
+   * Once the async task finishes, its callback is pushed into a **queue**.
+
+4. **Event Loop**
+
+   * The event loop continuously checks:
+
+     * “Is the call stack empty?”
+     * If yes → it moves the first callback from the queue into the call stack for execution.
+
+This process repeats continuously — that’s the “loop.”
+
+
+### **Example:**
+
+```javascript
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Inside timeout");
+}, 0);
+
+console.log("End");
+```
+
+**Output:**
+
+```
+Start
+End
+Inside timeout
+```
+
+Even though the timeout delay is `0`,
+it still runs **after** `End`, because `setTimeout` is asynchronous —
+its callback waits in the queue until the main call stack is empty.
+
+
+
+### **In Short:**
+
+> The Event Loop allows JavaScript to handle asynchronous operations efficiently,
+> even though it runs on a single thread.
+
+---
+
+Would you like me to explain it visually with a **diagram** or **animation analogy** (like a waiter in a restaurant) next? It helps make it stick instantly.
