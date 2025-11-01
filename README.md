@@ -242,4 +242,3 @@ its callback waits in the queue until the main call stack is empty.
 
 ---
 
-Would you like me to explain it visually with a **diagram** or **animation analogy** (like a waiter in a restaurant) next? It helps make it stick instantly.
