@@ -242,3 +242,124 @@ its callback waits in the queue until the main call stack is empty.
 
 ---
 
+
+# 6. What is Callback Hell and how to solve it?
+
+### **Answer:**
+
+A **callback** is a function passed as an argument to another function, to be executed **after some operation completes** (often asynchronously).
+
+While callbacks are useful for handling async tasks like reading files, making network requests, or using `setTimeout`, they can become messy when you have **multiple async operations depending on each other**.
+
+That’s when you get **Callback Hell** — a situation where callbacks are **nested inside other callbacks**, making the code **hard to read, debug, and maintain**.
+
+
+
+### **Example of Callback Hell:**
+
+```javascript
+getUser(function(user) {
+  getPosts(user.id, function(posts) {
+    getComments(posts[0].id, function(comments) {
+      console.log(comments);
+    });
+  });
+});
+```
+
+This nesting pattern is called **“pyramid of doom”**, because the code starts to move **diagonally to the right**, forming a pyramid shape.
+
+
+### **Why Callback Hell Happens:**
+
+1. When multiple asynchronous tasks depend on each other
+2. When error handling and logic are mixed inside nested functions
+3. When the code grows, making it unreadable and unmaintainable
+
+
+
+### **How to Solve Callback Hell**
+
+There are **three main ways** to fix or avoid callback hell:
+
+#### **1. Modularize Callbacks (Named Functions)**
+
+Move each callback into its **own named function**, instead of nesting them inline.
+
+```javascript
+function handleComments(comments) {
+  console.log(comments);
+}
+
+function handlePosts(posts) {
+  getComments(posts[0].id, handleComments);
+}
+
+function handleUser(user) {
+  getPosts(user.id, handlePosts);
+}
+
+getUser(handleUser);
+```
+
+This improves readability, though it still uses callbacks.
+
+
+
+#### **2. Use Promises**
+
+**Promises** make async code look more structured and linear by chaining `.then()` calls instead of nesting.
+
+```javascript
+getUser()
+  .then(user => getPosts(user.id))
+  .then(posts => getComments(posts[0].id))
+  .then(comments => console.log(comments))
+  .catch(error => console.error(error));
+```
+
+Each step returns a Promise, and errors are handled in one place using `.catch()`.
+
+---
+
+#### **3. Use Async/Await (Best Modern Way)**
+
+The **async/await** syntax makes asynchronous code look and behave like synchronous code.
+
+```javascript
+async function showComments() {
+  try {
+    const user = await getUser();
+    const posts = await getPosts(user.id);
+    const comments = await getComments(posts[0].id);
+    console.log(comments);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+showComments();
+```
+
+This is **cleaner, easier to read, and easier to debug** — no nested callbacks, no messy `.then()` chains.
+
+
+
+### **In Short:**
+
+> **Callback Hell** happens when you nest too many callbacks, making code hard to read and maintain.
+> You can solve it using **named functions**, **Promises**, or (best option) **async/await**, which makes async code look like normal synchronous code.
+
+
+
+### **Bonus Tip:**
+
+If an interviewer asks follow-up questions:
+
+* Say that **callback hell** was a big problem in early JavaScript (especially before ES6).
+* Mention that **Promises** (introduced in ES6) and **async/await** (ES8) were specifically designed to fix it.
+* Add that **error handling and readability** are much better with async/await.
+
+---
+
+
