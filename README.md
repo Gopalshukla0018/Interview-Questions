@@ -363,3 +363,127 @@ If an interviewer asks follow-up questions:
 ---
 
 
+# 7. What are Promises in JavaScript?
+
+### **Answer:**
+
+A **Promise** in JavaScript is an object that represents the **eventual completion (or failure)** of an asynchronous operation and its resulting value.
+
+You can think of a Promise as a **placeholder** for a value that isn’t available yet — like a “promise” that you’ll get the data in the future (e.g., from an API call or a file read).
+
+
+
+### **Why Promises?**
+
+Before Promises, we handled async tasks with **callbacks**, which often led to **callback hell** — messy, deeply nested code.
+Promises were introduced in **ES6 (ES2015)** to make asynchronous code easier to write, read, and manage.
+
+
+
+### **Promise States**
+
+A Promise can be in one of **three states**:
+
+1. **Pending** – The operation is still running.
+2. **Fulfilled** – The operation completed successfully, and you get a result.
+3. **Rejected** – The operation failed, and you get an error.
+
+Once a Promise is fulfilled or rejected, it’s considered **settled** (it won’t change state again).
+
+
+
+### **Creating a Promise**
+
+```javascript
+const myPromise = new Promise((resolve, reject) => {
+  let success = true;
+
+  if (success) {
+    resolve("Operation successful!");
+  } else {
+    reject("Something went wrong!");
+  }
+});
+```
+
+Here:
+
+* `resolve()` is called when the async task succeeds.
+* `reject()` is called when it fails.
+
+---
+
+### **Consuming a Promise**
+
+You handle the results of a Promise using `.then()` and `.catch()`:
+
+```javascript
+myPromise
+  .then(result => console.log(result))   // Runs when resolved
+  .catch(error => console.error(error)); // Runs when rejected
+```
+
+**Output (if success = true):**
+
+```
+Operation successful!
+```
+
+
+
+### **Chaining Promises**
+
+You can chain `.then()` calls to run multiple async operations in sequence, without nesting:
+
+```javascript
+fetchUser()
+  .then(user => fetchPosts(user.id))
+  .then(posts => fetchComments(posts[0].id))
+  .then(comments => console.log(comments))
+  .catch(error => console.error(error));
+```
+
+Each `.then()` returns a new Promise, allowing smooth chaining.
+
+
+
+### **Using Promises with Async/Await (Modern Way)**
+
+Instead of chaining `.then()`, you can use `async/await` for cleaner syntax:
+
+```javascript
+async function getData() {
+  try {
+    const user = await fetchUser();
+    const posts = await fetchPosts(user.id);
+    console.log(posts);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+This makes asynchronous code look synchronous and easier to read.
+
+
+
+### **In Short:**
+
+> A **Promise** is an object that represents the eventual result of an asynchronous operation.
+> It helps write cleaner async code by avoiding callback hell.
+> Promises have three states — *pending*, *fulfilled*, and *rejected* — and are handled using `.then()`, `.catch()`, and optionally `async/await`.
+
+
+
+### **Bonus Tip (for interviews):**
+
+If they ask **“Why are Promises better than callbacks?”**, say:
+
+* Promises avoid **nested structures** (callback hell).
+* They provide **better error handling** with `.catch()`.
+* They make code **more predictable and maintainable**.
+* They work perfectly with **async/await**, introduced later for even cleaner syntax.
+
+---
+
+
