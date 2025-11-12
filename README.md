@@ -487,3 +487,168 @@ If they ask **“Why are Promises better than callbacks?”**, say:
 ---
 
 
+# 8. What is the `this` keyword in JavaScript?
+
+### **Answer:**
+
+The **`this`** keyword in JavaScript refers to the **object that is currently executing the code** — it represents the **context** in which a function is called.
+
+However, the value of `this` **depends on how (and where)** the function is called, **not where it’s defined**.
+That’s what often confuses people in JavaScript.
+
+
+
+### **1. `this` in the Global Context**
+
+In the **global scope** (outside any function):
+
+```javascript
+console.log(this);
+```
+
+* In **browser**, `this` refers to the **window** object.
+* In **Node.js**, it refers to the **global** object (or `{}` in modules).
+
+
+
+### **2. `this` Inside a Regular Function**
+
+In a **normal function**, the value of `this` depends on **how** the function is called.
+
+#### Example:
+
+```javascript
+function show() {
+  console.log(this);
+}
+
+show(); // In browser → window | In strict mode → undefined
+```
+
+* In **non-strict mode**, `this` defaults to the **global object**.
+* In **strict mode**, `this` becomes `undefined`.
+
+
+
+### **3. `this` Inside an Object Method**
+
+When a function is called as a **method of an object**, `this` refers to **that object**.
+
+```javascript
+const person = {
+  name: "Gopal",
+  greet() {
+    console.log(this.name);
+  },
+};
+
+person.greet(); // "Gopal"
+```
+
+Here, `this` refers to the `person` object because `greet` is called through it.
+
+
+
+### **4. `this` in Arrow Functions**
+
+Arrow functions **do not have their own `this`**.
+Instead, they **inherit `this` from their surrounding (lexical) scope**.
+
+```javascript
+const person = {
+  name: "Gopal",
+  greet: () => {
+    console.log(this.name);
+  },
+};
+
+person.greet(); // undefined
+```
+
+Here, `this` inside the arrow function doesn’t refer to `person`.
+It refers to the **outer scope** (global `this`), so `this.name` is `undefined`.
+
+That’s why arrow functions are **not good for methods** that rely on `this`.
+
+
+
+### **5. `this` in Constructors (with `new`)**
+
+When you call a function with the `new` keyword, it creates a **new object**, and inside that function, `this` refers to the **newly created object**.
+
+```javascript
+function Car(brand) {
+  this.brand = brand;
+}
+
+const car1 = new Car("Tesla");
+console.log(car1.brand); // "Tesla"
+```
+
+Here, `this` refers to the new object being created by `new Car()`.
+
+
+
+### **6. `this` in Event Listeners (Browser Example)**
+
+In DOM event handlers, `this` refers to the **HTML element** that received the event.
+
+```javascript
+button.addEventListener("click", function() {
+  console.log(this); // <button> element
+});
+```
+
+If you use an **arrow function** instead, `this` will not refer to the element, but to the **outer scope**.
+
+
+
+### **7. Explicit Binding: `call`, `apply`, and `bind`**
+
+You can **manually set the value of `this`** using these methods:
+
+```javascript
+function greet() {
+  console.log(`Hello, ${this.name}`);
+}
+
+const user = { name: "Gopal" };
+
+greet.call(user);  // "Hello, Gopal"
+greet.apply(user); // "Hello, Gopal"
+
+const boundGreet = greet.bind(user);
+boundGreet();      // "Hello, Gopal"
+```
+
+* `call()` and `apply()` **invoke** the function immediately.
+* `bind()` **returns a new function** with `this` permanently set.
+
+
+
+### **In Short:**
+
+> The `this` keyword refers to the **object that owns the function at the time it’s called**.
+> Its value depends on **how the function is called**, not where it’s defined.
+
+| **Context**            | **Value of `this`**                  |
+| ---------------------- | ------------------------------------ |
+| Global scope           | Global object (`window` or `global`) |
+| Object method          | The object itself                    |
+| Function (strict mode) | `undefined`                          |
+| Constructor function   | The new instance                     |
+| Arrow function         | Inherits from surrounding scope      |
+| Event handler          | The DOM element (in browser)         |
+| Using call/apply/bind  | Manually set                         |
+
+
+### **Bonus Tip (for interviews):**
+
+If asked about common confusion:
+
+* Explain that arrow functions **lexically bind** `this` — they take it from where they’re written, not how they’re called.
+* Mention that in React, this is why we often use **arrow functions** in class components to keep `this` correctly bound.
+
+---
+
+
