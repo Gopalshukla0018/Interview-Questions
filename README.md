@@ -712,3 +712,101 @@ Here `msg` is private — it can’t be accessed outside the IIFE.
 
 ---
 
+
+# 10. What is the difference between `call()`, `apply()`, and `bind()`?
+
+**Answer:**
+In JavaScript, `call()`, `apply()`, and `bind()` are **methods used to manually set the value of `this`** when calling a function.
+They all let you control which object a function should use as `this`, but they differ in **how** they are used and **when** they execute.
+
+
+
+### **1. `call()`**
+
+The `call()` method **calls a function immediately**, with a given `this` value and **arguments passed individually**.
+
+**Example:**
+
+```javascript
+function greet(city, country) {
+  console.log(`Hello ${this.name} from ${city}, ${country}`);
+}
+
+const user = { name: "Gopal" };
+
+greet.call(user, "Farrukhabad", "India");
+```
+
+**Output:**
+
+```
+Hello Gopal from Farrukhabad, India
+```
+
+✅ Executes **immediately**
+✅ Arguments are passed **separately (comma-separated)**
+
+
+### **2. `apply()`**
+
+The `apply()` method is **just like `call()`**, but it takes the arguments as an **array**.
+
+**Example:**
+
+```javascript
+greet.apply(user, ["Farrukhabad", "India"]);
+```
+
+**Output:**
+
+```
+Hello Gopal from Farrukhabad, India
+```
+
+✅ Executes **immediately**
+✅ Arguments are passed **as an array**
+
+**Use Case:** When you already have arguments in an array or array-like object.
+
+
+
+### **3. `bind()`**
+
+The `bind()` method **does not call the function immediately.**
+Instead, it **returns a new function** with `this` permanently set to the provided object.
+
+**Example:**
+
+```javascript
+const greetUser = greet.bind(user, "Farrukhabad", "India");
+greetUser(); // Executes later
+```
+
+**Output:**
+
+```
+Hello Gopal from Farrukhabad, India
+```
+
+✅ Does **not execute immediately**
+✅ Returns a **new function** with `this` bound
+
+**Use Case:** When you want to store or reuse a function with a fixed `this` context (common in event handlers or callbacks).
+
+
+### **In short:**
+
+| Method      | Executes Immediately? | How to Pass Arguments          | Returns a Function? | Description                              |
+| ----------- | --------------------- | ------------------------------ | ------------------- | ---------------------------------------- |
+| **call()**  | ✅ Yes                 | Individually (comma-separated) | ❌ No                | Calls the function right away            |
+| **apply()** | ✅ Yes                 | As an array                    | ❌ No                | Same as call(), but with array arguments |
+| **bind()**  | ❌ No                  | Individually (comma-separated) | ✅ Yes               | Returns a new function with fixed `this` |
+
+
+### **In one line (for interviews):**
+
+> “`call()` and `apply()` both call a function immediately with a specified `this` — the only difference is that `call()` takes arguments separately, while `apply()` takes them as an array.
+> `bind()` doesn’t execute the function immediately — it returns a new function with that `this` value permanently set.”
+
+---
+
