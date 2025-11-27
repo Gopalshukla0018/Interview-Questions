@@ -808,5 +808,97 @@ Hello Gopal from Farrukhabad, India
 > “`call()` and `apply()` both call a function immediately with a specified `this` — the only difference is that `call()` takes arguments separately, while `apply()` takes them as an array.
 > `bind()` doesn’t execute the function immediately — it returns a new function with that `this` value permanently set.”
 
+
+# 11. What are Higher-Order Functions?
+
+### **Answer:**
+
+A **Higher-Order Function (HOF)** in JavaScript is a function that:
+
+* Takes **another function as an argument**, or
+* **Returns a function** as its result, or
+* Does both.
+
+In simple words, a higher-order function is a function that works with other functions.
+
 ---
 
+### **Example 1: Function as an Argument**
+
+```javascript
+function greet(name) {
+  return "Hello " + name;
+}
+
+function processUser(fn, user) {
+  return fn(user);
+}
+
+console.log(processUser(greet, "Gopal")); 
+// Output: Hello Gopal
+```
+
+Here, `processUser` is a higher-order function because it accepts another function (`greet`) as a parameter.
+
+---
+
+### **Example 2: Function Returning Another Function**
+
+```javascript
+function multiplier(factor) {
+  return function(number) {
+    return number * factor;
+  };
+}
+
+const double = multiplier(2);
+console.log(double(5)); // 10
+```
+
+`multiplier` is a higher-order function because it **returns a function**.
+
+---
+
+### **Common Built-in Higher-Order Functions**
+
+Many array methods in JavaScript are higher-order functions because they accept functions as callbacks:
+
+* `map()`
+* `filter()`
+* `reduce()`
+* `forEach()`
+* `find()`
+* `sort()`
+
+**Example with `map`:**
+
+```javascript
+const numbers = [1, 2, 3];
+const squares = numbers.map(n => n * n);
+
+console.log(squares); // [1, 4, 9]
+```
+
+---
+
+### **Why Higher-Order Functions are Useful**
+
+* Cleaner and more readable code
+* Helps avoid repetition
+* Makes code more modular
+* Encourages functional programming style
+
+---
+
+### **In short:**
+
+> A **Higher-Order Function** is a function that takes another function as input, returns a function, or both.
+> They help write cleaner, reusable, and more flexible code.
+
+---
+
+### **One-liner for interview use:**
+
+> “A higher-order function is a function that operates on other functions by taking them as arguments or returning them.”
+
+---
