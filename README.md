@@ -901,4 +901,53 @@ console.log(squares); // [1, 4, 9]
 
 > “A higher-order function is a function that operates on other functions by taking them as arguments or returning them.”
 
+----
+## 12. What is currying in JavaScript?
+
+Currying in JavaScript is a technique where a function that normally takes multiple arguments is converted into a sequence of functions, each taking one argument at a time.
+
+Instead of calling a function like this:
+```js
+sum(2, 3)
+```
+You call it like this:
+```js
+sum(2)(3)
+```
+
+### Example:
+```js
+function multiply(a) {
+  return function(b) {
+    return a * b;
+  }
+}
+
+const double = multiply(2);
+console.log(double(5)); // Output: 10
+```
+
+Here:
+- `multiply(2)` returns a new function  
+- That new function waits for the second value  
+- Then it performs the calculation
+
+### Why use currying?
+- It helps in code reusability  
+- Makes functions easier to customize  
+- Useful in functional programming  
+- Helps avoid repeating the same arguments again and again
+
+### Real-world example:
+```js
+function discount(rate) {
+  return function(price) {
+    return price - price * rate;
+  }
+}
+
+const tenPercentOff = discount(0.10);
+console.log(tenPercentOff(200)); // Output: 180
+```
+
 ---
