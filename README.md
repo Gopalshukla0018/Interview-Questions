@@ -951,3 +951,81 @@ console.log(tenPercentOff(200)); // Output: 180
 ```
 
 ---
+
+### 13. What is shallow copy and deep copy in JavaScript?
+
+In JavaScript, copying an object does not always create a new independent object. There are two types of copy: **shallow copy** and **deep copy**.
+
+---
+
+### Shallow Copy
+
+A shallow copy copies only the first level of an object.
+If the object has nested objects, their references are copied, not the actual data.
+
+So, changes in the copied object can affect the original one.
+
+#### Example:
+
+```js
+const original = { name: "John", address: { city: "Delhi" } };
+
+const copy = Object.assign({}, original);
+// or
+const copy2 = { ...original };
+
+copy.address.city = "Mumbai";
+
+console.log(original.address.city); // Mumbai (changed)
+```
+
+This happened because both objects share the same `address` reference.
+
+---
+
+### Deep Copy
+
+A deep copy creates a completely new object, including all nested objects.
+Changes in the copied object do not affect the original one.
+
+#### Example (simple way using JSON):
+
+```js
+const original = { name: "John", address: { city: "Delhi" } };
+
+const copy = JSON.parse(JSON.stringify(original));
+copy.address.city = "Mumbai";
+
+console.log(original.address.city); // Delhi (not changed)
+```
+
+#### Example (modern way using structuredClone):
+
+```js
+const copy = structuredClone(original);
+```
+
+---
+
+### Key Difference:
+
+| Shallow Copy             | Deep Copy                  |
+| ------------------------ | -------------------------- |
+| Copies only first level  | Copies all levels          |
+| Shares nested references | Creates full separate copy |
+| Faster                   | Safer but heavier          |
+
+---
+
+### Use shallow copy when:
+
+* Object is flat (no nesting)
+* Performance matters
+
+### Use deep copy when:
+
+* Object has nested data
+* You want full isolation
+
+---
+
