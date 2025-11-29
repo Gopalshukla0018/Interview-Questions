@@ -1121,3 +1121,144 @@ null === undefined   // false
 > "`undefined` means a variable was declared but not assigned, while `null` is an intentional absence of value set by the programmer."
 
 ---
+
+
+
+# 15. What is CORS and how do you handle it?
+
+### **Answer:**
+
+**CORS (Cross-Origin Resource Sharing)** is a **browser security feature** that controls whether one website is allowed to access resources from another website.
+
+By default, browsers block requests made from one origin (domain) to another origin for security reasons.
+CORS decides **who can access your API and who cannot**.
+
+An **origin** means:
+
+* Domain
+* Protocol (`http` / `https`)
+* Port
+
+If any one of these is different, it’s considered a **cross-origin** request.
+
+---
+
+### **Example of CORS Issue**
+
+Frontend is running on:
+
+```
+http://localhost:3000
+```
+
+Backend API is running on:
+
+```
+http://localhost:5000
+```
+
+Because the ports are different, the browser will block the request unless CORS is configured properly.
+
+---
+
+### **How CORS Works (Simple)**
+
+When a browser makes a cross-origin request:
+
+1. The server sends **CORS headers** in the response.
+2. The browser checks those headers.
+3. If allowed, the response is delivered to your JavaScript code.
+4. If not allowed, the browser blocks it.
+
+Important headers:
+
+* `Access-Control-Allow-Origin`
+* `Access-Control-Allow-Methods`
+* `Access-Control-Allow-Headers`
+* `Access-Control-Allow-Credentials`
+
+---
+
+### **How to Handle CORS (Server-side) — Example in Express.js**
+
+The correct place to fix CORS is on the **backend**, not the frontend.
+
+#### Using `cors` middleware (recommended way):
+
+```javascript
+import cors from "cors";
+import express from "express";
+
+const app = express();
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+app.listen(5000);
+```
+
+This allows requests only from `http://localhost:3000`.
+
+---
+
+### **Allowing All Origins (Not Recommended for Production)**
+
+```javascript
+app.use(cors());
+```
+
+This allows requests from anywhere. OK for testing, risky for production.
+
+---
+
+### **Handling CORS Manually (Without Library)**
+
+```javascript
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
+```
+
+---
+
+### **Preflight Requests (IMPORTANT)**
+
+For some requests (like `PUT`, `DELETE`, or requests with custom headers), the browser sends an **OPTIONS request** first.
+This is called a **preflight request**.
+
+The server must respond correctly to this request, otherwise the main request will be blocked.
+
+---
+
+### **Common CORS Mistakes**
+
+* Trying to fix CORS in frontend (you can’t)
+* Using `*` with `credentials: true` (not allowed)
+* Forgetting to allow `OPTIONS`
+* Not matching the exact origin
+* Missing headers in server response
+
+---
+
+### **In short:**
+
+> CORS is a browser security rule that controls cross-origin API access.
+> It is handled on the server by sending proper headers.
+> In Express, we configure CORS easily using the `cors` middleware.
+
+---
+
+### **One-liner for interview use:**
+
+> “CORS is a browser mechanism that restricts cross-origin requests. We handle it by configuring proper headers on the backend using CORS middleware.”
+
+---
+
+
