@@ -1029,3 +1029,95 @@ const copy = structuredClone(original);
 
 ---
 
+
+# 14. Difference between `null` and `undefined`
+
+### **Answer:**
+
+In JavaScript, `null` and `undefined` both mean “no value”, but they are used in **different situations** and have different meanings.
+
+---
+
+### **`undefined`**
+
+`undefined` means a variable has been declared but **not assigned any value** yet.
+It usually indicates something is missing by **default**.
+
+**Example:**
+
+```javascript
+let a;
+console.log(a); // undefined
+```
+
+Other cases where you get `undefined`:
+
+```javascript
+function test() {}
+console.log(test()); // undefined
+
+const obj = {};
+console.log(obj.key); // undefined
+
+const arr = [1, 2];
+console.log(arr[5]); // undefined
+```
+
+---
+
+### **`null`**
+
+`null` means the variable is **intentionally empty**.
+It is an **explicit assignment** by the developer to indicate “no value”.
+
+**Example:**
+
+```javascript
+let user = null;
+console.log(user); // null
+```
+
+This shows that the variable exists, but currently has **no valid value**.
+
+---
+
+### **Type Difference (Important Interview Point)**
+
+```javascript
+typeof undefined; // "undefined"
+typeof null;      // "object"
+```
+
+`typeof null` returning `"object"` is a long-known JavaScript bug, kept for backward compatibility.
+
+---
+
+### **Comparison Difference**
+
+```javascript
+null == undefined    // true
+null === undefined   // false
+```
+
+* `==` treats both as “empty”
+* `===` checks type too, so they’re different
+
+---
+
+### **In short:**
+
+| Feature        | `undefined`          | `null`                 |
+| -------------- | -------------------- | ---------------------- |
+| Meaning        | Not assigned yet     | Intentionally empty    |
+| Set by         | JavaScript (default) | Developer              |
+| Type           | `undefined`          | `object` (JS bug)      |
+| Equality `==`  | Equal to null        | Equal to undefined     |
+| Equality `===` | Not equal to null    | Not equal to undefined |
+
+---
+
+### **One-liner for interview use:**
+
+> "`undefined` means a variable was declared but not assigned, while `null` is an intentional absence of value set by the programmer."
+
+---
