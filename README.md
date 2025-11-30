@@ -1,7 +1,4 @@
 # Interview-Questions
-
-
-
 ---
 # 1. var vs let vs const?
 **Answer:**
