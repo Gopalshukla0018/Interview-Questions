@@ -1261,4 +1261,111 @@ The server must respond correctly to this request, otherwise the main request wi
 
 ---
 
+# 16. Difference between Synchronous and Asynchronous Code
+
+### **Answer:**
+
+In JavaScript, **synchronous** and **asynchronous** code decide how tasks are executed —
+whether JavaScript waits for a task to finish or moves on to the next one.
+
+---
+
+## **Synchronous Code**
+
+Synchronous code runs **line by line**.
+Each task must complete before the next one starts.
+
+This means JavaScript **waits** for the current operation to finish before moving forward.
+
+### **Example:**
+
+```javascript
+console.log("Start");
+
+console.log("Processing");
+
+console.log("End");
+```
+
+### **Output:**
+
+```
+Start
+Processing
+End
+```
+
+Everything runs in order. No waiting, no delay.
+
+---
+
+## **Asynchronous Code**
+
+Asynchronous code allows JavaScript to **start a task and move on** to the next one
+without waiting for that task to complete.
+
+When the async task finishes, its result is handled later using callbacks, Promises, or `async/await`.
+
+### **Example:**
+
+```javascript
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Async Task");
+}, 2000);
+
+console.log("End");
+```
+
+### **Output:**
+
+```
+Start
+End
+Async Task
+```
+
+JavaScript does not wait for `setTimeout`.
+It moves ahead and runs `"End"` first.
+
+---
+
+## **Key Differences**
+
+| Feature       | Synchronous             | Asynchronous                     |
+| ------------- | ----------------------- | -------------------------------- |
+| Execution     | One by one              | Non-blocking                     |
+| Waiting       | Waits for each task     | Moves ahead without waiting      |
+| Speed feeling | Slower if task is heavy | Faster and responsive            |
+| Blocking      | Yes                     | No                               |
+| Use case      | Simple logic            | API calls, file read, DB, timers |
+
+---
+
+## **Real-Life Example**
+
+**Synchronous:**
+Standing in one line at a counter.
+You wait for your turn completely.
+
+**Asynchronous:**
+You place an order and sit down.
+When it’s ready, they call your name.
+
+---
+
+## **In short:**
+
+> Synchronous code blocks execution and runs step-by-step.
+> Asynchronous code does not block and lets long tasks run in the background.
+
+---
+
+## **One-liner for interview use:**
+
+> “Synchronous code waits for each task to finish, while asynchronous code lets other operations continue without waiting.”
+
+---
+
 
