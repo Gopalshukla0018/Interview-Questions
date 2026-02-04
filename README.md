@@ -61,6 +61,7 @@ In JavaScript, both `==` and `===` are comparison operators, but the difference 
 ---
 # 3.What is Hoisting
 **Answer:**
+
 Hoisting in JavaScript is a behavior where **variable and function declarations are moved to the top of their scope** before the code is executed.
 
 It means you can use a function or variable **before it’s actually written in the code**, because JavaScript’s engine processes declarations first during the **compilation phase**.
@@ -112,7 +113,13 @@ So when you try to call it before initialization, it throws an error.
 
 **In short:**
 
-> “Hoisting means JavaScript moves declarations (not initializations) to the top of the scope before execution. Function declarations are fully hoisted, but function expressions and variables declared with `var` are hoisted as `undefined`, while `let` and `const` remain in the temporal dead zone.”
+> “Correct Interview Answer (Best One)
+
+Hoisting is a JavaScript behavior where variables and functions are made available in memory before the code is executed.
+
+This happens because, during the memory creation phase of the execution context, JavaScript allocates memory to variables and functions before running the code.
+
+Variables declared with var are initialized with undefined, while function declarations are stored with their complete function body, which is why they can be accessed before their declaration in the code.”
 
 
 ---
