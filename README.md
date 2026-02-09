@@ -28,7 +28,9 @@ console.log(c); // error
 
 **In short:**
 
-> "`var` is function-scoped and old-style, `let` is block-scoped and reassignable, and `const` is block-scoped but not reassignable. In modern JavaScript, we generally prefer `let` and `const` to avoid unexpected behavior."
+> "`var` is function-scoped and gets hoisted with an initial value of undefined, which can cause unexpected bugs.
+let and const are block-scoped and are hoisted but stay in the temporal dead zone until initialized.
+let allows reassignment, while const doesn’t, which is why we prefer let and const in modern JavaScript."
 ---
 
 
