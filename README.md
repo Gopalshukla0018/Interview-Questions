@@ -124,6 +124,13 @@ This happens because, during the memory creation phase of the execution context,
 Variables declared with var are initialized with undefined, while function declarations are stored with their complete function body, which is why they can be accessed before their declaration in the code.”
 
 
+Hoisting is a JavaScript behavior where variable and function declarations are processed before code execution.
+JavaScript runs in two phases: memory creation phase and execution phase.
+During the memory phase, variables declared with var are allocated memory and initialized with undefined, while function declarations are stored completely in memory.
+Because of this, we can access var variables and function declarations before their actual declaration in the code.
+However, let and const are also hoisted but are not accessible before initialization due to the Temporal Dead Zone.
+
+
 ---
 
 # 4. What is a closure?
